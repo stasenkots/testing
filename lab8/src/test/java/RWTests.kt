@@ -4,6 +4,7 @@ import org.junit.Before
 import org.junit.Test
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.chrome.ChromeOptions
 import page.HomePage
 import java.time.LocalDate
 
@@ -15,7 +16,9 @@ class RWTests {
 
     @Before
     fun browserSetup() {
-        _driver = ChromeDriver()
+        val option = ChromeOptions()
+        option.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage")
+        _driver = ChromeDriver(option)
         driver.manage().window().maximize()
     }
 
