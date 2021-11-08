@@ -5,10 +5,11 @@ import org.junit.Test
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
-import page.HomePage
+import page.TopAviaPage
+import page.TopTourHomePage
 import java.time.LocalDate
 
-class RWTests {
+class TopTourTests {
 
     private var _driver: WebDriver? = null
     private val driver: WebDriver
@@ -24,20 +25,24 @@ class RWTests {
 
     @Test
     fun testSearchResultForTimetableAndTicketSearch() {
-        val source = "Минск"
-        val destination = "Борисов"
-        val expectedSources = setOf("Институт Культуры", "Минск-Пассажирский", "Минск-Восточный")
-        val expectedDestinations = setOf("Борисов")
-        val passRWRoutePage = HomePage(driver)
+        val source = "Киев"
+        val destination = "Москва"
+        val date = LocalDate.now()
+        val aviaPage = TopTourHomePage(driver)
             .openPage()
+            .navigateToAirTickets()
+        aviaPage
             .enterFrom(source)
             .enterTo(destination)
-            .enterDate(LocalDate.now().plusDays(2))
-            .searchForTrain()
+            .enterDate(date)
+            .submit()
 
+        val resultDate = aviaPage.getDate()
         assertTrue(
-            passRWRoutePage.getSources().all { expectedSources.contains(it) }
-                    && passRWRoutePage.getDestinations().all { expectedDestinations.contains(it) }
+            aviaPage.getSource().contains(source)
+                    && aviaPage.getDestination().contains(destination)
+                    && date.dayOfMonth == resultDate.dayOfMonth
+                    && date.monthValue == resultDate.monthValue
         )
 
     }
