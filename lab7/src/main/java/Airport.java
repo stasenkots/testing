@@ -1,8 +1,8 @@
-import Planes.ExperimentalPlane;
+import planes.ExperimentalPlane;
 import models.MilitaryType;
-import Planes.MilitaryPlane;
-import Planes.PassengerPlane;
-import Planes.Plane;
+import planes.MilitaryPlane;
+import planes.PassengerPlane;
+import planes.Plane;
 
 import java.util.*;
 
@@ -103,7 +103,7 @@ public class Airport {
     public Airport sortByMaxLoadCapacity() {
         Collections.sort(planes, new Comparator<Plane>() {
             public int compare(Plane plane1, Plane plane2) {
-                return plane1.getMinLoadCapacity() - plane2.getMinLoadCapacity();
+                return plane1.getMaxLoadCapacity() - plane2.getMaxLoadCapacity();
             }
         });
         return this;
