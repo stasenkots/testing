@@ -24,7 +24,7 @@ class TopTourTests {
     }
 
     @Test
-    fun testSearchResultForTimetableAndTicketSearch() {
+    fun testSearchResultForAviatickets() {
         val source = "Киев"
         val destination = "Москва"
         val date = LocalDate.now()

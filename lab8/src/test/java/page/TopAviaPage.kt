@@ -36,13 +36,15 @@ class TopAviaPage(driver: WebDriver) : AbstractPage(driver) {
 
     fun enterFrom(from: String): TopAviaPage {
         fromInput.sendKeys(from + "\n")
-        driver.getElement(By.xpath("//*[@id=\"ui-id-1\"]/li[1]")).click()
+        val prompt = driver.getElement(By.xpath("//*[@id=\"ui-id-1\"]/li[1]"))
+        prompt.click()
         return this
     }
 
     fun enterTo(to: String): TopAviaPage {
         toInput.sendKeys(to)
-        driver.getElement(By.xpath("//*[@id=\"ui-id-2\"]/li[1]")).click()
+        val prompt = driver.getElement(By.xpath("//*[@id=\"ui-id-2\"]/li[1]"))
+        prompt.click()
         return this
     }
 
