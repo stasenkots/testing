@@ -28,8 +28,8 @@ class TopAviaPage(driver: WebDriver) : AbstractPage(driver) {
 
     fun enterDeparture(departure: String): TopAviaPage {
         departureField.sendKeys(departure + "\n")
-        val prompt = driver.getElement(By.xpath(XPath.TopAviaPage.FIRST_ELEMENT_OF_DEPARTURE_LIST))
-        prompt.click()
+        //val prompt = driver.getElement(By.xpath(XPath.TopAviaPage.FIRST_ELEMENT_OF_DEPARTURE_LIST))
+        //  prompt.click()
         return this
     }
 
@@ -46,9 +46,17 @@ class TopAviaPage(driver: WebDriver) : AbstractPage(driver) {
         return this
     }
 
-    fun submit(): TopAviaResultPage {
+    fun submit(): TopAviaPage {
         searchButton.click()
+        return this
+    }
+
+    fun getResultPage(): TopAviaResultPage {
         return TopAviaResultPage(driver)
+    }
+
+    fun isTicketsFound(): Boolean {
+        return driver.getElement(By.xpath(XPath.TopAviaPage.DIALOG_SEARCH_ERROR)).isDisplayed
     }
 
     private fun selectDate(date: LocalDate) {

@@ -8,13 +8,14 @@ import java.time.LocalDate
 
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.`is`
+import org.junit.Assert
 
 
 class TopTourTests : CommonConditions() {
 
     @Test
     fun testSearchResultForAviatickets() {
-        val source = "Киев"
+        val source = "Минск"
         val destination = "Москва"
         val date = LocalDate.now()
 
@@ -28,10 +29,30 @@ class TopTourTests : CommonConditions() {
             .enterArrival(destination)
             .enterDate(date)
             .submit()
+            .getResultPage()
             .waitUntilPageLoaded()
 
         val flight = topAviaResultPage.getFlight()
 
         assertThat(flight,`is`(equalTo(expectedFlight)))
+    }
+
+    @Test
+    fun testSearchResultForNotExistedAviatickets() {
+        val source = "Гродно"
+        val destination = "Нью-Йорк"
+        val date = LocalDate.now()
+
+        val aviaPage = TopTourHomePage(driver)
+            .openPage()
+            .navigateToAirTickets()
+        val isTicketFound = aviaPage
+            .enterDeparture(source)
+            .enterArrival(destination)
+            .enterDate(date)
+            .submit()
+            .isTicketsFound()
+
+        Assert.assertTrue(isTicketFound)
     }
 }

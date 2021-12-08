@@ -11,6 +11,7 @@ object XPath {
         const val SEARCH_BUTTON = "//*[contains(@class,\"nemo-flights-form__searchButton\")]"
         const val FIRST_ELEMENT_OF_DEPARTURE_LIST = "//*[@id=\"ui-id-1\"]/li[1]"
         const val FIRST_ELEMENT_OF_ARRIVAL_LIST = "//*[@id=\"ui-id-2\"]/li[1]"
+        const val DIALOG_SEARCH_ERROR = "//*[@data-bind=\"text: searchError\"]"
         fun getXPathForCalendarDays(date: LocalDate): String {
             return """//div[@data-day = "${date.dayOfMonth}" and @data-month="${date.monthValue - 1}" and @data-year="${date.year}"]"""
         }
