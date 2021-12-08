@@ -1,14 +1,14 @@
 package tests
 
-import junit.framework.Assert.assertTrue
-import org.junit.After
-import org.junit.Before
+import model.Flight
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.chrome.ChromeOptions
 import page.TopTourHomePage
 import java.time.LocalDate
+
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.`is`
+
 
 class TopTourTests : CommonConditions() {
 
@@ -17,6 +17,9 @@ class TopTourTests : CommonConditions() {
         val source = "Киев"
         val destination = "Москва"
         val date = LocalDate.now()
+
+        val expectedFlight = Flight(source, destination, date)
+
         val aviaPage = TopTourHomePage(driver)
             .openPage()
             .navigateToAirTickets()
@@ -27,12 +30,8 @@ class TopTourTests : CommonConditions() {
             .submit()
             .waitUntilPageLoaded()
 
-        val resultDate = topAviaResultPage.waitUntilPageLoaded().getDate()
-        assertTrue(
-            topAviaResultPage.getSource().contains(source)
-                    && topAviaResultPage.getDestination().contains(destination)
-                    && date.dayOfMonth == resultDate.dayOfMonth
-                    && date.monthValue == resultDate.monthValue
-        )
+        val flight = topAviaResultPage.getFlight()
+
+        assertThat(flight,`is`(equalTo(expectedFlight)))
     }
 }
