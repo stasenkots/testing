@@ -6,7 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition
 
 
 class PageLoadedCondition : ExpectedCondition<Boolean> {
-    override fun apply(driver: WebDriver): Boolean {
+    override fun apply(driver: WebDriver?): Boolean {
         return (driver as JavascriptExecutor).executeScript("return document.readyState") == "complete"
     }
 }

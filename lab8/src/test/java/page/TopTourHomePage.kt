@@ -9,7 +9,7 @@ import java.time.Duration
 
 class TopTourHomePage(driver: WebDriver) : AbstractPage(driver) {
 
-    @FindBy(xpath = "//a[@href=\"${Urls.AVIA}\"]")
+    @FindBy(xpath = XPath.TopTourHomePage.AIRTICKETS)
     private lateinit var airtickets: WebElement
 
     fun openPage(): TopTourHomePage {
