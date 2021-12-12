@@ -12,6 +12,9 @@ class TopTourHomePage(driver: WebDriver) : AbstractPage(driver) {
     @FindBy(xpath = XPath.TopTourHomePage.AIRTICKETS)
     private lateinit var airtickets: WebElement
 
+    @FindBy(xpath = XPath.TopTourHomePage.ONLINE_BOOKING)
+    private lateinit var onlineBookingButton: WebElement
+
     fun openPage(): TopTourHomePage {
         driver.get(Urls.HOME)
         WebDriverWait(
@@ -25,6 +28,12 @@ class TopTourHomePage(driver: WebDriver) : AbstractPage(driver) {
         airtickets.click()
         driver.switchTo().window(driver.windowHandles.toList()[1])
         return TopAviaPage(driver).openPage()
+    }
+
+    fun navigateToOnlineBooking(): TourSearchPage {
+        onlineBookingButton.click()
+        driver.switchTo().window(driver.windowHandles.toList()[1])
+        return TourSearchPage(driver)
     }
 
 }

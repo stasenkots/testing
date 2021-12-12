@@ -1,6 +1,5 @@
 package page
 
-import page.Urls
 import java.time.LocalDate
 
 object XPath {
@@ -22,9 +21,35 @@ object XPath {
             "//*[contains(@class,\"nemo-flights-results__summary__route__segment__geo_departure\")]/*[@class= \"nemo-flights-results__summary__route__segment__geo__main\"]"
         const val DATE = "//*[@class = \"nemo-flights-results__summary__route__segment__date\"]"
         const val DESTINATION =
-            "//*[contains(@class,\"nemo-flights-results__summary__route__segment__geo_arrival\")]/*[@class= \"nemo-flights-results__summary__route__segment__geo__main\"]"    }
+            "//*[contains(@class,\"nemo-flights-results__summary__route__segment__geo_arrival\")]/*[@class= \"nemo-flights-results__summary__route__segment__geo__main\"]"
+    }
 
     object TopTourHomePage {
         const val AIRTICKETS = "//a[@href=\"${Urls.AVIA}\"]"
+        const val ONLINE_BOOKING = "//a[@href=\"${Urls.ONLINE_BOOKING}\"]"
+    }
+
+    object TopTourSearchPage {
+        const val CLOSE_DEPARTURE = "//*[@class=\"search-choice-close\"]"
+        const val CLOSE_ARRIVAL_CITY =
+            "//*[@class=\" paddingRightLeft5px \"]//*[@class=\"select2-search-choice-close\"]"
+        const val FIELD_DEPARTURE = "//*[contains(@class,\"search-placeholder\")]"
+        const val FIELD_ARRIVAL_COUNTRY = "//*[@id = \"s2id_autogen6\"]"
+        const val FIELD_ARRIVAL_CITY = "//*[@id = \"s2id_autogen7\"]"
+        const val FIRST_ITEM_FROM_DEPARTURES = "//*[@class=\"chosen-results\"]/li[1]"
+        const val CALENDAR_INPUT = "//*[@id = \"dates\"]"
+        const val SEARCH_BUTTON = "//*[contains(@class, \"btn-search\")]"
+        const val MASK = "//*[@id = \"select2-drop-mask\"]"
+        const val DEPARTURE_CITY = "//*[contains(@data-bind,\"CityDepature.Value\")]"
+        const val ARRIVAL_CITY = "//*[contains(@data-bind,\"City.Value\")]"
+        const val ARRIVAL_DATE = "//*[contains(@data-bind,\"text:FromDateShown\")]"
+        const val NO_TOURS_FOUND_TITLE = "//*[contains(@data-bind,\"text: noToursFoundTitle()\")]"
+        fun getListDropdownElement(value: String): String {
+            return "//*[@class=\"select2-result-label\" and text() = \"${value}\"]/parent::li"
+        }
+
+        fun getXPathForCalendarDays(date: LocalDate): String {
+            return """//*[@class = "day activeClass" and text() = "${date.dayOfMonth}"]"""
+        }
     }
 }

@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait
 import java.time.Duration
 
 fun WebDriver.getElement(by: By): WebElement {
-    return WebDriverWait(this, Duration.ofSeconds(20))
+    return WebDriverWait(this, Duration.ofSeconds(10))
         .until(ExpectedConditions.presenceOfElementLocated(by))
 }
 
