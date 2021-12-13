@@ -1,15 +1,11 @@
 package page
 
 import model.Hotel
-import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
-import utils.getElement
-import utils.getElements
+import utils.*
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 
 class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
@@ -30,8 +26,8 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
     private lateinit var hotelTitleNewWindow: WebElement
 
     fun openPage(): ToursRussiaPage {
-        driver.switchTo().frame(driver.getElement(By.xpath(XPath.ToursRussiaPage.FRAME)))
-        driver.getElement(By.xpath(XPath.ToursRussiaPage.DATE))
+        driver.switchTo().frame(driver.getElement(XPath.ToursRussiaPage.FRAME))
+        driver.getElement(XPath.ToursRussiaPage.DATE)
         return this
     }
 
@@ -39,44 +35,47 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
         hotelInput.clear()
         hotelInput.sendKeys(hotelName)
 
-        val firstItemOfDropdown = driver.getElement(By.xpath(XPath.ToursRussiaPage.FIRST_ITEM_OF_DROP_DOWN_MENU_HOTELS))
+        val firstItemOfDropdown = driver.getElement(XPath.ToursRussiaPage.FIRST_ITEM_OF_DROP_DOWN_MENU_HOTELS)
         firstItemOfDropdown.click()
         return this
     }
 
-    fun enterDatesRange(from: LocalDate, to: LocalDate): ToursRussiaPage {
+    fun enterDatesRange(arrivalDate: LocalDate, departureDate: LocalDate): ToursRussiaPage {
         dateInput.click()
-        val fromInput = "${from.dayOfMonth}${String.format("%02d", from.monthValue)}${from.year}"
-        val toInput = "${to.dayOfMonth}${String.format("%02d", from.monthValue)}${to.year}"
+        val arrivalDateInput = formatDateByDotPattern(arrivalDate)
+        val departureDateInput = formatDateByDotPattern(departureDate)
 
         dateInput.clear()
-        dateInput.sendKeys("$fromInput$toInput")
+        dateInput.sendKeys("$arrivalDateInput$departureDateInput")
         return this
     }
 
     fun getHotel(): Hotel {
         driver.switchTo().parentFrame().switchTo()
-            .frame(driver.getElement(By.xpath(XPath.ToursRussiaPage.FRAME_NEW_WINDOW)))
-        driver.getElement(By.xpath(XPath.ToursRussiaPage.DATE))
+            .frame(driver.getElement(XPath.ToursRussiaPage.FRAME_NEW_WINDOW))
+        driver.getElement(XPath.ToursRussiaPage.DATE)
         val hotelTitle = hotelTitleNewWindow.text
 
-        val dates = dateInputNewWindow.getAttribute("value")
+        val (dateArrival, dateDeparture) = dateInputNewWindow.getAttribute(ATTRIBUTE_VALUE)
             .split("-")
-            .map { date ->
-                val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale("ru"))
-                LocalDate.parse(date.trim(), formatter)
-            }
-        return Hotel(hotelTitle, dates[0], dates[1])
+            .map { date -> formatStringByDotPattern(date) }
+            .toPair()
+        return Hotel(hotelTitle, dateArrival, dateDeparture)
     }
 
     fun getResultTours(): List<Hotel> {
-        return driver.getElements(By.xpath(XPath.ToursRussiaPage.TOUR))
-            .map { Hotel(it.getAttribute("title"), LocalDate.now(), LocalDate.now()) }
+        return driver.getElements(XPath.ToursRussiaPage.TOUR)
+            .map { Hotel(it.getAttribute(ATTRIBUTE_TITLE), LocalDate.now(), LocalDate.now()) }
     }
 
     fun submit(): ToursRussiaPage {
         findButton.click()
         return this
+    }
+
+    private companion object {
+        const val ATTRIBUTE_VALUE = "value"
+        const val ATTRIBUTE_TITLE = "title"
     }
 
 }

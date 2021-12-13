@@ -1,6 +1,5 @@
 package page
 
-import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
@@ -22,20 +21,18 @@ class TopAviaPage(driver: WebDriver) : AbstractPage(driver) {
     private lateinit var searchButton: WebElement
 
     fun openPage(): TopAviaPage {
-        driver.getElement(By.xpath(XPath.TopAviaPage.DEPARTURE_FIELD))
+        driver.getElement(XPath.TopAviaPage.DEPARTURE_FIELD)
         return this
     }
 
     fun enterDeparture(departure: String): TopAviaPage {
         departureField.sendKeys(departure + "\n")
-        //val prompt = driver.getElement(By.xpath(XPath.TopAviaPage.FIRST_ELEMENT_OF_DEPARTURE_LIST))
-        //  prompt.click()
         return this
     }
 
     fun enterArrival(arrival: String): TopAviaPage {
         arrivalField.sendKeys(arrival)
-        val prompt = driver.getElement(By.xpath(XPath.TopAviaPage.FIRST_ELEMENT_OF_ARRIVAL_LIST))
+        val prompt = driver.getElement(XPath.TopAviaPage.FIRST_ELEMENT_OF_ARRIVAL_LIST)
         prompt.click()
         return this
     }
@@ -56,12 +53,12 @@ class TopAviaPage(driver: WebDriver) : AbstractPage(driver) {
     }
 
     fun isTicketsFound(): Boolean {
-        return driver.getElement(By.xpath(XPath.TopAviaPage.DIALOG_SEARCH_ERROR)).isDisplayed
+        return driver.getElement(XPath.TopAviaPage.DIALOG_SEARCH_ERROR).isDisplayed
     }
 
     private fun selectDate(date: LocalDate) {
         val selectedDate =
-            driver.getElement(By.xpath(XPath.TopAviaPage.getXPathForCalendarDays(date)))
+            driver.getElement(XPath.TopAviaPage.getXPathForCalendarDays(date))
         selectedDate.click()
     }
 }

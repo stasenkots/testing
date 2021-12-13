@@ -17,10 +17,10 @@ object XPath {
     }
 
     object TopAviaResultPage {
-        const val SOURCE =
+        const val DEPARTURE =
             "//*[contains(@class,\"nemo-flights-results__summary__route__segment__geo_departure\")]/*[@class= \"nemo-flights-results__summary__route__segment__geo__main\"]"
         const val DATE = "//*[@class = \"nemo-flights-results__summary__route__segment__date\"]"
-        const val DESTINATION =
+        const val ARRIVAL =
             "//*[contains(@class,\"nemo-flights-results__summary__route__segment__geo_arrival\")]/*[@class= \"nemo-flights-results__summary__route__segment__geo__main\"]"
     }
 
@@ -55,8 +55,7 @@ object XPath {
     }
 
     object ToursRussiaPage {
-        const val FRAME =
-            "//*[@src=\"https://stells.info/partnership/integration/?key=p1ThWH4YVzmz8%2BTDlJ3tvZJoyweWOZ%2FONE7DCDUBExI%3D\"]"
+        const val FRAME = "//*[@id=\"stellsPartner1\"]"
         const val DATE = "//*[@id = \"iDrPicker-input\"]"
         const val FIND = "//button[contains(@class,\"finderCatalog-submit\")]"
         const val HOTEL = "//*[@id=\"finderLook-input\"]"

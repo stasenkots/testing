@@ -6,11 +6,10 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
 import page.XPath.TopTourSearchPage.FIRST_ITEM_FROM_DEPARTURES
+import utils.formatStringByDotPattern
 import utils.getElement
 import utils.getElements
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 class TourSearchPage(driver: WebDriver) : AbstractPage(driver) {
 
@@ -39,7 +38,7 @@ class TourSearchPage(driver: WebDriver) : AbstractPage(driver) {
         closeDepartureButton.click()
         departureField.sendKeys(departure)
         val firstDropDownElement =
-            driver.getElement(By.xpath(FIRST_ITEM_FROM_DEPARTURES))
+            driver.getElement(FIRST_ITEM_FROM_DEPARTURES)
         firstDropDownElement.click()
         return this
     }
@@ -47,7 +46,7 @@ class TourSearchPage(driver: WebDriver) : AbstractPage(driver) {
     fun enterArrivalCountry(arrivalCountry: String): TourSearchPage {
         arrivalCountryField.click()
         val firstDropDownElement =
-            driver.getElement(By.xpath(XPath.TopTourSearchPage.getListDropdownElement(arrivalCountry)))
+            driver.getElement(XPath.TopTourSearchPage.getListDropdownElement(arrivalCountry))
         firstDropDownElement.click()
         return this
     }
@@ -56,16 +55,16 @@ class TourSearchPage(driver: WebDriver) : AbstractPage(driver) {
         closeArrivalCityButton.click()
         arrivalCityField.click()
         val firstDropDownElement =
-            driver.getElement(By.xpath(XPath.TopTourSearchPage.getListDropdownElement(arrivalCity)))
+            driver.getElement(XPath.TopTourSearchPage.getListDropdownElement(arrivalCity))
         firstDropDownElement.click()
-        driver.getElement(By.xpath(XPath.TopTourSearchPage.MASK)).click()
+        driver.getElement(XPath.TopTourSearchPage.MASK).click()
         return this
     }
 
     fun enterCalendarDay(date: LocalDate): TourSearchPage {
         calendarInput.click()
         val calendarDay =
-            driver.getElement(By.xpath(XPath.TopTourSearchPage.getXPathForCalendarDays(date)))
+            driver.getElement(XPath.TopTourSearchPage.getXPathForCalendarDays(date))
         calendarDay.click()
         return this
     }
@@ -76,12 +75,10 @@ class TourSearchPage(driver: WebDriver) : AbstractPage(driver) {
     }
 
     fun getTrips(): List<Trip> {
-        val departures = driver.getElements(By.xpath(XPath.TopTourSearchPage.DEPARTURE_CITY)).map { it.text }
-        val arrivals = driver.getElements(By.xpath(XPath.TopTourSearchPage.ARRIVAL_CITY)).map { it.text }
-        val datesArrival = driver.getElements(By.xpath(XPath.TopTourSearchPage.ARRIVAL_DATE)).map {
-            val formatter = DateTimeFormatter.ofPattern("d.MM.yy", Locale("ru"))
-            LocalDate.parse(it.text, formatter)
-        }
+        val departures = driver.getElements(XPath.TopTourSearchPage.DEPARTURE_CITY).map { it.text }
+        val arrivals = driver.getElements(XPath.TopTourSearchPage.ARRIVAL_CITY).map { it.text }
+        val datesArrival = driver.getElements(XPath.TopTourSearchPage.ARRIVAL_DATE)
+            .map { formatStringByDotPattern(it.text) }
 
         val trips = mutableListOf<Trip>()
         for (i in departures.indices) {
@@ -91,7 +88,7 @@ class TourSearchPage(driver: WebDriver) : AbstractPage(driver) {
     }
 
     fun isToursFound(): Boolean {
-        return driver.getElement(By.xpath(XPath.TopTourSearchPage.NO_TOURS_FOUND_TITLE)).isDisplayed == false
+        return driver.getElement(XPath.TopTourSearchPage.NO_TOURS_FOUND_TITLE).isDisplayed == false
     }
 
 }
