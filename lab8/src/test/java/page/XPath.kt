@@ -27,6 +27,7 @@ object XPath {
     object TopTourHomePage {
         const val AIRTICKETS = "//a[@href=\"${Urls.AVIA}\"]"
         const val ONLINE_BOOKING = "//a[@href=\"${Urls.ONLINE_BOOKING}\"]"
+        const val RUSSIA = "//a[@href=\"${Urls.RUSSIA}\"]"
     }
 
     object TopTourSearchPage {
@@ -51,5 +52,13 @@ object XPath {
         fun getXPathForCalendarDays(date: LocalDate): String {
             return """//*[@class = "day activeClass" and text() = "${date.dayOfMonth}"]"""
         }
+    }
+
+    object ToursRussiaPage {
+        const val FRAME =
+            "//*[@src=\"https://stells.info/partnership/integration/?key=p1ThWH4YVzmz8%2BTDlJ3tvZJoyweWOZ%2FONE7DCDUBExI%3D\"]"
+        const val DATE = "//*[@id = \"iDrPicker-input\"]"
+        const val FIND = "//*[contains(@class,\"finderCatalog-submit\")]"
+        const val TOUR = "//*[contains(@class,\"resultGrid-productName\")]"
     }
 }

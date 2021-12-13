@@ -5,7 +5,6 @@ import org.junit.After
 import org.junit.Before
 import org.openqa.selenium.WebDriver
 
-
 open class CommonConditions {
     private var _driver: WebDriver? = null
     protected val driver: WebDriver

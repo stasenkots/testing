@@ -3,12 +3,11 @@ package tests
 import model.Flight
 import model.Trip
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.*
 import org.junit.Test
 import page.TopTourHomePage
 import java.time.LocalDate
 
-import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.`is`
 import org.junit.Assert
 
 
@@ -54,7 +53,7 @@ class TopTourTests : CommonConditions() {
             .submit()
             .isTicketsFound()
 
-        Assert.assertTrue(isTicketFound)
+        assertThat(isTicketFound, `is`(false))
     }
 
     @Test
@@ -76,7 +75,8 @@ class TopTourTests : CommonConditions() {
             .search()
 
         val trips = topTourSearchPage.getTrips()
-        Assert.assertTrue(trips.all { expectedTrip == it })
+
+        assertThat(trips, everyItem(equalTo(expectedTrip)))
     }
 
     @Test
@@ -85,11 +85,11 @@ class TopTourTests : CommonConditions() {
         val destinationCountry = "ОАЭ"
         val destinationCity = "Ум Аль Кувейн"
         val date = LocalDate.now()
-        val expectedTrip = Trip(source, destinationCity, date)
 
         val aviaPage = TopTourHomePage(driver)
             .openPage()
             .navigateToOnlineBooking()
+
         val topTourSearchPage = aviaPage
             .enterDeparture(source)
             .enterArrivalCountry(destinationCountry)
@@ -98,6 +98,24 @@ class TopTourTests : CommonConditions() {
             .search()
 
         val isToursFound = topTourSearchPage.isToursFound()
-        Assert.assertFalse(isToursFound)
+
+        assertThat(isToursFound, `is`(false))
+    }
+
+    @Test
+    fun testFindToursInRussia() {
+        val from = LocalDate.now().plusMonths(1)
+        val to = from.plusWeeks(1)
+
+        val topToursRussiaPage = TopTourHomePage(driver)
+            .openPage()
+            .navigateToRussiaTours()
+
+        val hotels = topToursRussiaPage
+            .enterDatesRange(from, to)
+            .submit()
+            .getResultTours()
+
+        assertThat(hotels, not(empty()))
     }
 }
