@@ -58,7 +58,11 @@ object XPath {
         const val FRAME =
             "//*[@src=\"https://stells.info/partnership/integration/?key=p1ThWH4YVzmz8%2BTDlJ3tvZJoyweWOZ%2FONE7DCDUBExI%3D\"]"
         const val DATE = "//*[@id = \"iDrPicker-input\"]"
-        const val FIND = "//*[contains(@class,\"finderCatalog-submit\")]"
+        const val FIND = "//button[contains(@class,\"finderCatalog-submit\")]"
+        const val HOTEL = "//*[@id=\"finderLook-input\"]"
         const val TOUR = "//*[contains(@class,\"resultGrid-productName\")]"
+        const val FIRST_ITEM_OF_DROP_DOWN_MENU_HOTELS = "//*[contains(@class,\"dropdown-menu\")]/li[1]"
+        const val HOTEL_TITLE_NEW_WINDOW = "//*[contains(@class,\"product-title\")]"
+        const val FRAME_NEW_WINDOW = "//*[@id = \"stellsPartnerModal\"]/descendant-or-self::iframe"
     }
 }

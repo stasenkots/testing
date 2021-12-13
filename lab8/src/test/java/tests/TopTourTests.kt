@@ -1,14 +1,13 @@
 package tests
 
 import model.Flight
+import model.Hotel
 import model.Trip
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Test
 import page.TopTourHomePage
 import java.time.LocalDate
-
-import org.junit.Assert
 
 
 class TopTourTests : CommonConditions() {
@@ -117,5 +116,26 @@ class TopTourTests : CommonConditions() {
             .getResultTours()
 
         assertThat(hotels, not(empty()))
+    }
+
+    @Test
+    fun testFindToursInRussiaInHotel() {
+        val hotelName = "«Бархатные сезоны» город-отель (Екатерининский квартал)"
+        val arrivalDate = LocalDate.now().plusMonths(1)
+        val departureDate = arrivalDate.plusWeeks(1)
+
+        val expectedHotel = Hotel(hotelName, arrivalDate, departureDate)
+
+        val topToursRussiaPage = TopTourHomePage(driver)
+            .openPage()
+            .navigateToRussiaTours()
+
+        val hotel = topToursRussiaPage
+            .enterHotel(hotelName)
+            .enterDatesRange(arrivalDate, departureDate)
+            .submit()
+            .getHotel()
+
+        assertThat(hotel, `is`(equalTo(expectedHotel)))
     }
 }
