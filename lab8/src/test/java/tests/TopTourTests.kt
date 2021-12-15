@@ -1,5 +1,6 @@
 package tests
 
+import model.ChildCamp
 import model.Flight
 import model.Hotel
 import model.Trip
@@ -134,8 +135,54 @@ class TopTourTests : CommonConditions() {
             .enterHotel(hotelName)
             .enterDatesRange(arrivalDate, departureDate)
             .submit()
+            .moveToMainFrame()
+            .moveToNewWindow()
             .getHotel()
 
         assertThat(hotel, `is`(equalTo(expectedHotel)))
+    }
+
+    @Test
+    fun testFindChildCampInRussia() {
+        val childCampName =
+            "«Good Win» / «Гуд Вин» база лагеря детского отдыха"
+        val arrivalDate = LocalDate.now()
+
+        val expectedChildCamp = ChildCamp(childCampName, arrivalDate)
+
+        val topToursRussiaPage = TopTourHomePage(driver)
+            .openPage()
+            .navigateToRussiaTours()
+
+        val childCamps = topToursRussiaPage
+            .navigateToChildCamp()
+            .enterChildCamp(childCampName)
+            .enterDateArrival(arrivalDate)
+            .submit()
+            .moveToMainFrame()
+            .moveToNewWindow()
+            .getChildCamp()
+
+
+        assertThat(childCamps, `is`(equalTo(expectedChildCamp)))
+    }
+
+    @Test
+    fun testFindNotExistedChildCampInRussia() {
+        val childCampName = "Детские лагеря"
+        val arrivalDate = LocalDate.now()
+
+        val topToursRussiaPage = TopTourHomePage(driver)
+            .openPage()
+            .navigateToRussiaTours()
+
+        val isChildCampsFound = topToursRussiaPage
+            .navigateToChildCamp()
+            .enterChildCamp(childCampName)
+            .enterDateArrival(arrivalDate)
+            .submit()
+            .isChildCampsFound()
+
+        assertThat(isChildCampsFound, `is`(false))
     }
 }

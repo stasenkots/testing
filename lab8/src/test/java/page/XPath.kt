@@ -57,11 +57,14 @@ object XPath {
     object ToursRussiaPage {
         const val FRAME = "//*[@id=\"stellsPartner1\"]"
         const val DATE = "//*[@id = \"iDrPicker-input\"]"
+        const val DATE_CHILD_CAMP = "//*[contains(@class, \"iDatePicker-input\")]"
         const val FIND = "//button[contains(@class,\"finderCatalog-submit\")]"
-        const val HOTEL = "//*[@id=\"finderLook-input\"]"
+        const val INPUT = "//*[@id=\"finderLook-input\"]"
         const val TOUR = "//*[contains(@class,\"resultGrid-productName\")]"
-        const val FIRST_ITEM_OF_DROP_DOWN_MENU_HOTELS = "//*[contains(@class,\"dropdown-menu\")]/li[1]"
+        const val FIRST_ITEM_OF_DROP_DOWN_MENU = "//*[contains(@class,\"dropdown-menu\")]/li[1]"
         const val HOTEL_TITLE_NEW_WINDOW = "//*[contains(@class,\"product-title\")]"
         const val FRAME_NEW_WINDOW = "//*[@id = \"stellsPartnerModal\"]/descendant-or-self::iframe"
+        const val CHILD_CAMP_BUTTON = "//*[text() = \"Детские лагеря\"]//parent::*[contains(@class, \"finderCatalog-menuItem\")]"
+        const val CHILD_CAMP_NOT_FOUND = "//*[contains(@class, \"alert-warning\")]"
     }
 }
