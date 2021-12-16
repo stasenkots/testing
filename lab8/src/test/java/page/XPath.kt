@@ -66,5 +66,7 @@ object XPath {
         const val FRAME_NEW_WINDOW = "//*[@id = \"stellsPartnerModal\"]/descendant-or-self::iframe"
         const val CHILD_CAMP_BUTTON = "//*[text() = \"Детские лагеря\"]//parent::*[contains(@class, \"finderCatalog-menuItem\")]"
         const val CHILD_CAMP_NOT_FOUND = "//*[contains(@class, \"alert-warning\")]"
+        const val EXCURSIONS_BUTTON = "//*[text() = \"Экскурсии\"]//parent::*[contains(@class, \"finderCatalog-menuItem\")]"
+        const val CRUISES_BUTTON = "//*[text() = \"Круизы\"]//parent::*[contains(@class, \"finderCatalog-menuItem\")]"
     }
 }

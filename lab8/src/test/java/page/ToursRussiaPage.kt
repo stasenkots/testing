@@ -35,6 +35,12 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
     @FindBy(xpath = XPath.ToursRussiaPage.HOTEL_TITLE_NEW_WINDOW)
     private lateinit var hotelTitleNewWindow: WebElement
 
+    @FindBy(xpath = XPath.ToursRussiaPage.EXCURSIONS_BUTTON)
+    private lateinit var excursionsButton: WebElement
+
+    @FindBy(xpath = XPath.ToursRussiaPage.CRUISES_BUTTON)
+    private lateinit var cruisesButton: WebElement
+
     fun openPage(): ToursRussiaPage {
         driver.switchTo().frame(driver.getElement(XPath.ToursRussiaPage.FRAME))
         driver.getElement(XPath.ToursRussiaPage.DATE)
@@ -119,6 +125,16 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
         val dateArrivalInput = childCampDateInputNewWindow.getAttribute(ATTRIBUTE_VALUE)
         val dateArrival = formatStringByDotPattern(dateArrivalInput)
         return ChildCamp(title, dateArrival)
+    }
+
+    fun navigateToExcursions(): ToursRussiaPage{
+        excursionsButton.click()
+        return this
+    }
+
+    fun navigateToCruises(): ToursRussiaPage{
+        cruisesButton.click()
+        return this
     }
 
     fun isChildCampsFound(): Boolean {

@@ -154,7 +154,7 @@ class TopTourTests : CommonConditions() {
             .openPage()
             .navigateToRussiaTours()
 
-        val childCamps = topToursRussiaPage
+        val childCamp = topToursRussiaPage
             .navigateToChildCamp()
             .enterChildCamp(childCampName)
             .enterDateArrival(arrivalDate)
@@ -164,7 +164,7 @@ class TopTourTests : CommonConditions() {
             .getChildCamp()
 
 
-        assertThat(childCamps, `is`(equalTo(expectedChildCamp)))
+        assertThat(childCamp, `is`(equalTo(expectedChildCamp)))
     }
 
     @Test
@@ -178,6 +178,48 @@ class TopTourTests : CommonConditions() {
 
         val isChildCampsFound = topToursRussiaPage
             .navigateToChildCamp()
+            .enterChildCamp(childCampName)
+            .enterDateArrival(arrivalDate)
+            .submit()
+            .isChildCampsFound()
+
+        assertThat(isChildCampsFound, `is`(false))
+    }
+
+    @Test
+    fun testFindExcursionsInRussia() {
+        val childCampName = "«10 праздничных дней» (Орбита)"
+        val arrivalDate = LocalDate.now()
+
+        val expectedChildCamp = ChildCamp(childCampName, arrivalDate)
+
+        val topToursRussiaPage = TopTourHomePage(driver)
+            .openPage()
+            .navigateToRussiaTours()
+
+        val childCamps = topToursRussiaPage
+            .navigateToExcursions()
+            .enterChildCamp(childCampName)
+            .enterDateArrival(arrivalDate)
+            .submit()
+            .moveToMainFrame()
+            .moveToNewWindow()
+            .getChildCamp()
+
+        assertThat(childCamps, `is`(equalTo(expectedChildCamp)))
+    }
+
+    @Test
+    fun testFindNotExistedCruisesInRussia() {
+        val childCampName = "Россия"
+        val arrivalDate = LocalDate.now()
+
+        val topToursRussiaPage = TopTourHomePage(driver)
+            .openPage()
+            .navigateToRussiaTours()
+
+        val isChildCampsFound = topToursRussiaPage
+            .navigateToCruises()
             .enterChildCamp(childCampName)
             .enterDateArrival(arrivalDate)
             .submit()
