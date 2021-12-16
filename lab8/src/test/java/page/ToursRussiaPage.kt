@@ -1,6 +1,7 @@
 package page
 
 import model.ChildCamp
+import model.Excursion
 import model.Hotel
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
@@ -12,15 +13,15 @@ import java.time.LocalDate
 class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
 
     @FindBy(xpath = XPath.ToursRussiaPage.DATE)
-    private lateinit var dateInput: WebElement
+    private lateinit var datesRangeInput: WebElement
 
-    @FindBy(xpath = XPath.ToursRussiaPage.DATE_CHILD_CAMP)
-    private lateinit var childCampDateInput: WebElement
+    @FindBy(xpath = XPath.ToursRussiaPage.ARRIVAL_DATE)
+    private lateinit var dateArrivalInput: WebElement
 
     @FindBy(xpath = XPath.ToursRussiaPage.DATE)
     private lateinit var dateInputNewWindow: WebElement
 
-    @FindBy(xpath = XPath.ToursRussiaPage.DATE_CHILD_CAMP)
+    @FindBy(xpath = XPath.ToursRussiaPage.ARRIVAL_DATE)
     private lateinit var childCampDateInputNewWindow: WebElement
 
     @FindBy(xpath = XPath.ToursRussiaPage.FIND)
@@ -47,9 +48,9 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
         return this
     }
 
-    fun enterHotel(hotelName: String): ToursRussiaPage {
+    fun enterName(name: String): ToursRussiaPage {
         hotelInput.clear()
-        hotelInput.sendKeys(hotelName)
+        hotelInput.sendKeys(name)
 
         val firstItemOfDropdown = driver.getElement(XPath.ToursRussiaPage.FIRST_ITEM_OF_DROP_DOWN_MENU)
         firstItemOfDropdown.click()
@@ -57,21 +58,21 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
     }
 
     fun enterDatesRange(arrivalDate: LocalDate, departureDate: LocalDate): ToursRussiaPage {
-        dateInput.click()
+        datesRangeInput.click()
         val arrivalDateInput = formatDateByDotPattern(arrivalDate)
         val departureDateInput = formatDateByDotPattern(departureDate)
 
-        dateInput.clear()
-        dateInput.sendKeys("$arrivalDateInput$departureDateInput")
+        datesRangeInput.clear()
+        datesRangeInput.sendKeys("$arrivalDateInput$departureDateInput")
         return this
     }
 
     fun enterDateArrival(arrivalDate: LocalDate): ToursRussiaPage {
-        childCampDateInput.click()
+        dateArrivalInput.click()
         val arrivalDateInput = formatDateByDotPattern(arrivalDate)
 
-        childCampDateInput.clear()
-        childCampDateInput.sendKeys("$arrivalDateInput")
+        dateArrivalInput.clear()
+        dateArrivalInput.sendKeys("$arrivalDateInput")
         return this
     }
 
@@ -96,13 +97,6 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
         return this
     }
 
-    fun enterChildCamp(campName: String): ToursRussiaPage {
-        hotelInput.sendKeys(campName)
-        val firstItemOfDropdown = driver.getElement(XPath.ToursRussiaPage.FIRST_ITEM_OF_DROP_DOWN_MENU)
-        firstItemOfDropdown.click()
-        return this
-    }
-
     fun getResultTours(): List<Hotel> {
         return driver.getElements(XPath.ToursRussiaPage.TOUR)
             .map { Hotel(it.getAttribute(ATTRIBUTE_TITLE), LocalDate.now(), LocalDate.now()) }
@@ -119,7 +113,7 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
     }
 
     fun getChildCamp(): ChildCamp {
-        driver.getElement(XPath.ToursRussiaPage.DATE_CHILD_CAMP)
+        driver.getElement(XPath.ToursRussiaPage.ARRIVAL_DATE)
         val title = hotelTitleNewWindow.text
 
         val dateArrivalInput = childCampDateInputNewWindow.getAttribute(ATTRIBUTE_VALUE)
@@ -127,18 +121,27 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
         return ChildCamp(title, dateArrival)
     }
 
-    fun navigateToExcursions(): ToursRussiaPage{
+    fun getExcursion(): Excursion {
+        driver.getElement(XPath.ToursRussiaPage.ARRIVAL_DATE)
+        val title = hotelTitleNewWindow.text
+
+        val dateArrivalInput = childCampDateInputNewWindow.getAttribute(ATTRIBUTE_VALUE)
+        val dateDeparture = formatStringByDotPattern(dateArrivalInput)
+        return Excursion(title, dateDeparture)
+    }
+
+    fun navigateToExcursions(): ToursRussiaPage {
         excursionsButton.click()
         return this
     }
 
-    fun navigateToCruises(): ToursRussiaPage{
+    fun navigateToCruises(): ToursRussiaPage {
         cruisesButton.click()
         return this
     }
 
-    fun isChildCampsFound(): Boolean {
-        return driver.getElement(XPath.ToursRussiaPage.CHILD_CAMP_NOT_FOUND).isDisplayed == false
+    fun isToursFound(): Boolean {
+        return driver.getElement(XPath.ToursRussiaPage.TOURS_NOT_FOUND).isDisplayed == false
     }
 
     private companion object {

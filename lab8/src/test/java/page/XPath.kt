@@ -57,7 +57,7 @@ object XPath {
     object ToursRussiaPage {
         const val FRAME = "//*[@id=\"stellsPartner1\"]"
         const val DATE = "//*[@id = \"iDrPicker-input\"]"
-        const val DATE_CHILD_CAMP = "//*[contains(@class, \"iDatePicker-input\")]"
+        const val ARRIVAL_DATE = "//*[contains(@class, \"iDatePicker-input\")]"
         const val FIND = "//button[contains(@class,\"finderCatalog-submit\")]"
         const val INPUT = "//*[@id=\"finderLook-input\"]"
         const val TOUR = "//*[contains(@class,\"resultGrid-productName\")]"
@@ -65,7 +65,7 @@ object XPath {
         const val HOTEL_TITLE_NEW_WINDOW = "//*[contains(@class,\"product-title\")]"
         const val FRAME_NEW_WINDOW = "//*[@id = \"stellsPartnerModal\"]/descendant-or-self::iframe"
         const val CHILD_CAMP_BUTTON = "//*[text() = \"Детские лагеря\"]//parent::*[contains(@class, \"finderCatalog-menuItem\")]"
-        const val CHILD_CAMP_NOT_FOUND = "//*[contains(@class, \"alert-warning\")]"
+        const val TOURS_NOT_FOUND = "//*[contains(@class, \"alert-warning\")]"
         const val EXCURSIONS_BUTTON = "//*[text() = \"Экскурсии\"]//parent::*[contains(@class, \"finderCatalog-menuItem\")]"
         const val CRUISES_BUTTON = "//*[text() = \"Круизы\"]//parent::*[contains(@class, \"finderCatalog-menuItem\")]"
     }

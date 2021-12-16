@@ -1,9 +1,6 @@
 package tests
 
-import model.ChildCamp
-import model.Flight
-import model.Hotel
-import model.Trip
+import model.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Test
@@ -132,7 +129,7 @@ class TopTourTests : CommonConditions() {
             .navigateToRussiaTours()
 
         val hotel = topToursRussiaPage
-            .enterHotel(hotelName)
+            .enterName(hotelName)
             .enterDatesRange(arrivalDate, departureDate)
             .submit()
             .moveToMainFrame()
@@ -156,7 +153,7 @@ class TopTourTests : CommonConditions() {
 
         val childCamp = topToursRussiaPage
             .navigateToChildCamp()
-            .enterChildCamp(childCampName)
+            .enterName(childCampName)
             .enterDateArrival(arrivalDate)
             .submit()
             .moveToMainFrame()
@@ -178,53 +175,53 @@ class TopTourTests : CommonConditions() {
 
         val isChildCampsFound = topToursRussiaPage
             .navigateToChildCamp()
-            .enterChildCamp(childCampName)
+            .enterName(childCampName)
             .enterDateArrival(arrivalDate)
             .submit()
-            .isChildCampsFound()
+            .isToursFound()
 
         assertThat(isChildCampsFound, `is`(false))
     }
 
     @Test
     fun testFindExcursionsInRussia() {
-        val childCampName = "«10 праздничных дней» (Орбита)"
+        val excursionName = "«10 праздничных дней» (Орбита)"
         val arrivalDate = LocalDate.now()
 
-        val expectedChildCamp = ChildCamp(childCampName, arrivalDate)
+        val expectedExcursion = Excursion(excursionName, arrivalDate)
 
         val topToursRussiaPage = TopTourHomePage(driver)
             .openPage()
             .navigateToRussiaTours()
 
-        val childCamps = topToursRussiaPage
+        val excursion = topToursRussiaPage
             .navigateToExcursions()
-            .enterChildCamp(childCampName)
+            .enterName(excursionName)
             .enterDateArrival(arrivalDate)
             .submit()
             .moveToMainFrame()
             .moveToNewWindow()
-            .getChildCamp()
+            .getExcursion()
 
-        assertThat(childCamps, `is`(equalTo(expectedChildCamp)))
+        assertThat(excursion, `is`(equalTo(expectedExcursion)))
     }
 
     @Test
     fun testFindNotExistedCruisesInRussia() {
-        val childCampName = "Россия"
-        val arrivalDate = LocalDate.now()
+        val cruiseName = "Россия"
+        val date = LocalDate.now()
 
         val topToursRussiaPage = TopTourHomePage(driver)
             .openPage()
             .navigateToRussiaTours()
 
-        val isChildCampsFound = topToursRussiaPage
+        val isCruisesFound = topToursRussiaPage
             .navigateToCruises()
-            .enterChildCamp(childCampName)
-            .enterDateArrival(arrivalDate)
+            .enterName(cruiseName)
+            .enterDateArrival(date)
             .submit()
-            .isChildCampsFound()
+            .isToursFound()
 
-        assertThat(isChildCampsFound, `is`(false))
+        assertThat(isCruisesFound, `is`(false))
     }
 }
