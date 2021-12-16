@@ -8,7 +8,7 @@ import java.time.LocalDate
 
 class TopAviaResultPage(driver: WebDriver) : AbstractPage(driver) {
 
-    fun waitUntilPageLoaded(): TopAviaResultPage {
+    fun openPage(): TopAviaResultPage {
         driver.getElement(XPath.TopAviaResultPage.DEPARTURE)
         return this
     }

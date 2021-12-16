@@ -26,8 +26,7 @@ class TopTourTests : CommonConditions() {
             .enterArrival(destination)
             .enterDate(date)
             .submit()
-            .getResultPage()
-            .waitUntilPageLoaded()
+            .openResultPage()
 
         val flight = topAviaResultPage.getFlight()
 
@@ -68,7 +67,7 @@ class TopTourTests : CommonConditions() {
             .enterDeparture(source)
             .enterArrivalCountry(destinationCountry)
             .enterArrivalCity(destinationCity)
-            .enterCalendarDay(date)
+            .enterArrivalDate(date)
             .search()
 
         val trips = topTourSearchPage.getTrips()
@@ -91,7 +90,7 @@ class TopTourTests : CommonConditions() {
             .enterDeparture(source)
             .enterArrivalCountry(destinationCountry)
             .enterArrivalCity(destinationCity)
-            .enterCalendarDay(date)
+            .enterArrivalDate(date)
             .search()
 
         val isToursFound = topTourSearchPage.isToursFound()
@@ -133,7 +132,7 @@ class TopTourTests : CommonConditions() {
             .enterDatesRange(arrivalDate, departureDate)
             .submit()
             .moveToMainFrame()
-            .moveToNewWindow()
+            .moveToResultWindow()
             .getHotel()
 
         assertThat(hotel, `is`(equalTo(expectedHotel)))
@@ -152,12 +151,12 @@ class TopTourTests : CommonConditions() {
             .navigateToRussiaTours()
 
         val childCamp = topToursRussiaPage
-            .navigateToChildCamp()
+            .navigateToChildCampTab()
             .enterName(childCampName)
             .enterDateArrival(arrivalDate)
             .submit()
             .moveToMainFrame()
-            .moveToNewWindow()
+            .moveToResultWindow()
             .getChildCamp()
 
 
@@ -174,7 +173,7 @@ class TopTourTests : CommonConditions() {
             .navigateToRussiaTours()
 
         val isChildCampsFound = topToursRussiaPage
-            .navigateToChildCamp()
+            .navigateToChildCampTab()
             .enterName(childCampName)
             .enterDateArrival(arrivalDate)
             .submit()
@@ -195,12 +194,12 @@ class TopTourTests : CommonConditions() {
             .navigateToRussiaTours()
 
         val excursion = topToursRussiaPage
-            .navigateToExcursions()
+            .navigateToExcursionsTab()
             .enterName(excursionName)
             .enterDateArrival(arrivalDate)
             .submit()
             .moveToMainFrame()
-            .moveToNewWindow()
+            .moveToResultWindow()
             .getExcursion()
 
         assertThat(excursion, `is`(equalTo(expectedExcursion)))

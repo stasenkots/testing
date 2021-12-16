@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.ui.WebDriverWait
+import utils.Logger
 import java.time.Duration
 
 class TopTourHomePage(driver: WebDriver) : AbstractPage(driver) {
@@ -19,6 +20,7 @@ class TopTourHomePage(driver: WebDriver) : AbstractPage(driver) {
     private lateinit var russiaButton: WebElement
 
     fun openPage(): TopTourHomePage {
+        Logger.info("Open toptour home page")
         driver.get(Urls.HOME)
         WebDriverWait(
             driver,
@@ -28,18 +30,21 @@ class TopTourHomePage(driver: WebDriver) : AbstractPage(driver) {
     }
 
     fun navigateToAirTickets(): TopAviaPage {
+        Logger.info("Click airtickets button")
         airtickets.click()
         driver.switchTo().window(driver.windowHandles.toList()[1])
         return TopAviaPage(driver).openPage()
     }
 
     fun navigateToOnlineBooking(): TourSearchPage {
+        Logger.info("Click online-booking button")
         onlineBookingButton.click()
         driver.switchTo().window(driver.windowHandles.toList()[1])
-        return TourSearchPage(driver)
+        return TourSearchPage(driver).openPage()
     }
 
     fun navigateToRussiaTours(): ToursRussiaPage {
+        Logger.info("Click Russia button")
         russiaButton.click()
         return ToursRussiaPage(driver).openPage()
     }

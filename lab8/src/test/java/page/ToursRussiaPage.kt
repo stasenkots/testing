@@ -24,8 +24,8 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
     @FindBy(xpath = XPath.ToursRussiaPage.ARRIVAL_DATE)
     private lateinit var childCampDateInputNewWindow: WebElement
 
-    @FindBy(xpath = XPath.ToursRussiaPage.FIND)
-    private lateinit var findButton: WebElement
+    @FindBy(xpath = XPath.ToursRussiaPage.SEARCH)
+    private lateinit var searchButton: WebElement
 
     @FindBy(xpath = XPath.ToursRussiaPage.INPUT)
     private lateinit var hotelInput: WebElement
@@ -33,7 +33,7 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
     @FindBy(xpath = XPath.ToursRussiaPage.CHILD_CAMP_BUTTON)
     private lateinit var childCampButton: WebElement
 
-    @FindBy(xpath = XPath.ToursRussiaPage.HOTEL_TITLE_NEW_WINDOW)
+    @FindBy(xpath = XPath.ToursRussiaPage.HOTEL_TITLE_RESULT_WINDOW)
     private lateinit var hotelTitleNewWindow: WebElement
 
     @FindBy(xpath = XPath.ToursRussiaPage.EXCURSIONS_BUTTON)
@@ -43,12 +43,14 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
     private lateinit var cruisesButton: WebElement
 
     fun openPage(): ToursRussiaPage {
+        Logger.info("Open tours russia page")
         driver.switchTo().frame(driver.getElement(XPath.ToursRussiaPage.FRAME))
         driver.getElement(XPath.ToursRussiaPage.DATE)
         return this
     }
 
     fun enterName(name: String): ToursRussiaPage {
+        Logger.info("Enter name - $name")
         hotelInput.clear()
         hotelInput.sendKeys(name)
 
@@ -58,6 +60,7 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
     }
 
     fun enterDatesRange(arrivalDate: LocalDate, departureDate: LocalDate): ToursRussiaPage {
+        Logger.info("Enter arrival date - $arrivalDate; departure date - $departureDate")
         datesRangeInput.click()
         val arrivalDateInput = formatDateByDotPattern(arrivalDate)
         val departureDateInput = formatDateByDotPattern(departureDate)
@@ -68,6 +71,7 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
     }
 
     fun enterDateArrival(arrivalDate: LocalDate): ToursRussiaPage {
+        Logger.info("Enter arrival date - $arrivalDate")
         dateArrivalInput.click()
         val arrivalDateInput = formatDateByDotPattern(arrivalDate)
 
@@ -76,12 +80,14 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
         return this
     }
 
-    fun moveToNewWindow(): ToursRussiaPage {
-        driver.switchTo().frame(driver.getElement(XPath.ToursRussiaPage.FRAME_NEW_WINDOW))
+    fun moveToResultWindow(): ToursRussiaPage {
+        Logger.info("Move to result window")
+        driver.switchTo().frame(driver.getElement(XPath.ToursRussiaPage.FRAME_RESULT_WINDOW))
         return this
     }
 
     fun getHotel(): Hotel {
+        Logger.info("Get hotel")
         driver.getElement(XPath.ToursRussiaPage.DATE)
         val hotelTitle = hotelTitleNewWindow.text
 
@@ -89,59 +95,82 @@ class ToursRussiaPage(driver: WebDriver) : AbstractPage(driver) {
             .split("-")
             .map { date -> formatStringByDotPattern(date) }
             .toPair()
-        return Hotel(hotelTitle, dateArrival, dateDeparture)
+        val hotel = Hotel(hotelTitle, dateArrival, dateDeparture)
+        Logger.info("Hotel - $hotel")
+        return hotel
     }
 
-    fun navigateToChildCamp(): ToursRussiaPage {
+    fun navigateToChildCampTab(): ToursRussiaPage {
+        Logger.info("Navigate to child camp tab")
         childCampButton.click()
         return this
     }
 
     fun getResultTours(): List<Hotel> {
-        return driver.getElements(XPath.ToursRussiaPage.TOUR)
+        Logger.info("Get hotels")
+        val hotels = driver.getElements(XPath.ToursRussiaPage.TOUR)
             .map { Hotel(it.getAttribute(ATTRIBUTE_TITLE), LocalDate.now(), LocalDate.now()) }
+        Logger.info("Hotels - $hotels")
+        return hotels
     }
 
     fun submit(): ToursRussiaPage {
-        findButton.click()
+        Logger.info("Click search button")
+        searchButton.click()
         return this
     }
 
     fun moveToMainFrame(): ToursRussiaPage {
+        Logger.info("Click search button")
         driver.switchTo().parentFrame()
         return this
     }
 
     fun getChildCamp(): ChildCamp {
+        Logger.info("Get child camp")
+
         driver.getElement(XPath.ToursRussiaPage.ARRIVAL_DATE)
+
         val title = hotelTitleNewWindow.text
 
         val dateArrivalInput = childCampDateInputNewWindow.getAttribute(ATTRIBUTE_VALUE)
         val dateArrival = formatStringByDotPattern(dateArrivalInput)
-        return ChildCamp(title, dateArrival)
+        val childCamp = ChildCamp(title, dateArrival)
+        Logger.info("Child camp - $childCamp")
+        return childCamp
     }
 
     fun getExcursion(): Excursion {
+        Logger.info("Get excursion")
         driver.getElement(XPath.ToursRussiaPage.ARRIVAL_DATE)
+
         val title = hotelTitleNewWindow.text
 
         val dateArrivalInput = childCampDateInputNewWindow.getAttribute(ATTRIBUTE_VALUE)
         val dateDeparture = formatStringByDotPattern(dateArrivalInput)
-        return Excursion(title, dateDeparture)
+        val excursion = Excursion(title, dateDeparture)
+        Logger.info("Excursion - $excursion")
+        return excursion
     }
 
-    fun navigateToExcursions(): ToursRussiaPage {
+    fun navigateToExcursionsTab(): ToursRussiaPage {
+        Logger.info("Navigate to excursion tab")
+
         excursionsButton.click()
         return this
     }
 
     fun navigateToCruises(): ToursRussiaPage {
+        Logger.info("Navigate to cruises tab")
+
         cruisesButton.click()
         return this
     }
 
     fun isToursFound(): Boolean {
-        return driver.getElement(XPath.ToursRussiaPage.TOURS_NOT_FOUND).isDisplayed == false
+        val isToursFound = driver.getElement(XPath.ToursRussiaPage.TOURS_NOT_FOUND).isDisplayed == false
+        Logger.info("Is tours found - $isToursFound")
+        return isToursFound
     }
 
     private companion object {

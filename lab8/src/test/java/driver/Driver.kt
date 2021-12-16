@@ -15,7 +15,6 @@ object Driver {
     private var driver: WebDriver? = null
     fun get(): WebDriver {
 
-       // val properties = System.getProperty(SystemProperty.BROWSER_OPTIONS).split("\\s")
         if (driver == null) {
             val browser = System.getProperty(SystemProperty.BROWSER)
             driver = when (browser) {
