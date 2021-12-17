@@ -20,7 +20,7 @@ object Driver {
             val browser = System.getProperty(SystemProperty.BROWSER)
             driver = when (browser) {
                 Chrome.name -> getChromeDriver()
-                Firefox.name ->  getFirefoxDriver()
+                Firefox.name -> getFirefoxDriver()
                 else -> getChromeDriver()
             }
             driver?.manage()?.window()?.maximize()
@@ -28,15 +28,21 @@ object Driver {
         return driver!!
     }
 
-    private fun getChromeDriver(): WebDriver{
+    private fun getChromeDriver(): WebDriver {
         val options = ChromeOptions().apply {
-            addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage")
+            addArguments(
+                "--window-size=1920,1080",
+                "--start-maximized",
+                "--headless",
+                "--no-sandbox",
+                "--disable-dev-shm-usage"
+            )
         }
         WebDriverManager.chromedriver().setup()
         return ChromeDriver(options)
     }
 
-    private fun getFirefoxDriver(): WebDriver{
+    private fun getFirefoxDriver(): WebDriver {
         val options = FirefoxOptions().apply {
             addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage")
         }
