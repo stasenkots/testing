@@ -44,7 +44,9 @@ object Driver {
 //            addArguments("--no-default-browser-check");
 //            addArguments("--ignore-certificate-errors");
             addArguments("--start-maximized");
-            addArguments( "--window-size=1920,1080");
+           addArguments( "--window-size=1920,1080");
+//           addArguments( "--no-sandbox");
+//           addArguments( "--disable-dev-shm-usage");
         }
         WebDriverManager.chromedriver().setup()
         return ChromeDriver(options)

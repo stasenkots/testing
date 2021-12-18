@@ -10,6 +10,11 @@ fun formatStringByDotPattern(dateInput: String): LocalDate {
     return LocalDate.parse(dateInput.trim(), formatter)
 }
 
+fun formatStringByDotPatternWithShortYear(dateInput: String): LocalDate {
+    val formatter = DateTimeFormatter.ofPattern("dd.MM.yy", Locale("ru"))
+    return LocalDate.parse(dateInput.trim(), formatter)
+}
+
 fun formatDateByDotPattern(date: LocalDate): String {
     return "${String.format("%02d", date.dayOfMonth)}${String.format("%02d", date.monthValue)}${date.year}"
 }

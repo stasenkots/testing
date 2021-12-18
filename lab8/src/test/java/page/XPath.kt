@@ -34,6 +34,8 @@ object XPath {
         const val CLOSE_DEPARTURE = "//*[@class=\"search-choice-close\"]"
         const val CLOSE_ARRIVAL_CITY =
             "//*[@class=\" paddingRightLeft5px \"]//*[@class=\"select2-search-choice-close\"]"
+        const val CLOSE_ARRIVAL_COUNTRY =
+            "//*[@class=\"select2-search-choice\"]//*[@class=\"select2-search-choice-close\"]"
         const val FIELD_DEPARTURE = "//*[contains(@class,\"search-placeholder\")]"
         const val FIELD_ARRIVAL_COUNTRY = "//*[@id = \"s2id_autogen6\"]"
         const val FIELD_ARRIVAL_CITY = "//*[@id = \"s2id_autogen7\"]"
@@ -46,7 +48,11 @@ object XPath {
         const val ARRIVAL_DATE = "//*[contains(@data-bind,\"text:FromDateShown\")]"
         const val NO_TOURS_FOUND_TITLE = "//*[contains(@data-bind,\"text: noToursFoundTitle()\")]"
         fun getListDropdownElement(value: String): String {
-            return "//*[@class=\"select2-result-label\" and text() = \"${value}\"]/parent::li"
+            return "//*[@class=\"select2-result-label\" and text() = \"${value}\"]"
+        }
+
+        fun getListArrivalDropdownElement(value: String): String {
+            return "//*[text() = \"${value}\"]/ancestor-or-self::li[contains(@class,\"active-result\")]"
         }
 
         fun getXPathForCalendarDays(date: LocalDate): String {
@@ -64,9 +70,11 @@ object XPath {
         const val FIRST_ITEM_OF_DROP_DOWN_MENU = "//*[contains(@class,\"dropdown-menu\")]/li[1]"
         const val HOTEL_TITLE_RESULT_WINDOW = "//*[contains(@class,\"product-title\")]"
         const val FRAME_RESULT_WINDOW = "//*[@id = \"stellsPartnerModal\"]/descendant-or-self::iframe"
-        const val CHILD_CAMP_BUTTON = "//*[text() = \"Детские лагеря\"]//parent::*[contains(@class, \"finderCatalog-menuItem\")]"
+        const val CHILD_CAMP_BUTTON =
+            "//*[text() = \"Детские лагеря\"]//parent::*[contains(@class, \"finderCatalog-menuItem\")]"
         const val TOURS_NOT_FOUND = "//*[contains(@class, \"alert-warning\")]"
-        const val EXCURSIONS_BUTTON = "//*[text() = \"Экскурсии\"]//parent::*[contains(@class, \"finderCatalog-menuItem\")]"
+        const val EXCURSIONS_BUTTON =
+            "//*[text() = \"Экскурсии\"]//parent::*[contains(@class, \"finderCatalog-menuItem\")]"
         const val CRUISES_BUTTON = "//*[text() = \"Круизы\"]//parent::*[contains(@class, \"finderCatalog-menuItem\")]"
     }
 }
