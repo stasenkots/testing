@@ -60,7 +60,7 @@ class TopAviaPage(driver: WebDriver) : AbstractPage(driver) {
     }
 
     fun isTicketsFound(): Boolean {
-        val isTicketFound = driver.getElement(XPath.TopAviaPage.DIALOG_SEARCH_ERROR).isDisplayed
+        val isTicketFound = !driver.getElement(XPath.TopAviaPage.DIALOG_SEARCH_ERROR).isDisplayed
         Logger.info("isTicketFound - $isTicketFound")
         return isTicketFound
     }

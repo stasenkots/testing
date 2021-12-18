@@ -23,20 +23,28 @@ object Driver {
                 Firefox.name -> getFirefoxDriver()
                 else -> getChromeDriver()
             }
-            driver?.manage()?.window()?.maximize()
         }
+        driver?.manage()?.window()?.fullscreen()
         return driver!!
     }
 
     private fun getChromeDriver(): WebDriver {
         val options = ChromeOptions().apply {
-            addArguments(
-                "--window-size=1920,1080",
-                "--start-maximized",
-                "--headless",
-                "--no-sandbox",
-                "--disable-dev-shm-usage"
-            )
+//            addArguments(
+//                "--window-size=1920,1080",
+//                "--start-maximized",
+//                "--headless",
+//                "--no-sandbox",
+//                "--disable-dev-shm-usage"
+//            )
+            addArguments("--headless");
+//            addArguments("--test-type");
+//            addArguments("--disable-gpu");
+//            addArguments("--no-first-run");
+//            addArguments("--no-default-browser-check");
+//            addArguments("--ignore-certificate-errors");
+            addArguments("--start-maximized");
+            addArguments( "--window-size=1920,1080");
         }
         WebDriverManager.chromedriver().setup()
         return ChromeDriver(options)

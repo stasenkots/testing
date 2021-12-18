@@ -11,12 +11,12 @@ object Logger {
     init {
         val isEnabled = System.getProperty(SystemProperty.ENABLE_LOGGING).toBoolean()
         logger = if (isEnabled) {
-            LogManager.getLogger()
+            LogManager.getRootLogger()
         } else null
     }
 
     fun info(info: String) {
-        logger?.info(logger)
+        logger?.info(info)
     }
 
 }
