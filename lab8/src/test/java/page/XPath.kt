@@ -8,7 +8,6 @@ object XPath {
         const val ARRIVAL_FIELD = "//input[contains(@class,\"js-autofocus-field_arrival\")]"
         const val DATE_FIELD = "//input[contains(@class,\"js-autofocus-field_date\")]"
         const val SEARCH_BUTTON = "//*[contains(@class,\"nemo-flights-form__searchButton\")]"
-        const val FIRST_ELEMENT_OF_DEPARTURE_LIST = "//*[@id=\"ui-id-1\"]/li[1]"
         const val FIRST_ELEMENT_OF_ARRIVAL_LIST = "//*[@id=\"ui-id-2\"]/li[1]"
         const val DIALOG_SEARCH_ERROR = "//*[@data-bind=\"text: searchError\"]"
         fun getXPathForCalendarDays(date: LocalDate): String {
@@ -31,7 +30,6 @@ object XPath {
     }
 
     object TopTourSearchPage {
-        const val CLOSE_DEPARTURE = "//*[@class=\"search-choice-close\"]"
         const val CLOSE_ARRIVAL_CITY =
             "//*[@class=\" paddingRightLeft5px \"]//*[@class=\"select2-search-choice-close\"]"
         const val CLOSE_ARRIVAL_COUNTRY =
@@ -39,7 +37,6 @@ object XPath {
         const val FIELD_DEPARTURE = "//*[contains(@class,\"search-placeholder\")]"
         const val FIELD_ARRIVAL_COUNTRY = "//*[@id = \"s2id_autogen6\"]"
         const val FIELD_ARRIVAL_CITY = "//*[@id = \"s2id_autogen7\"]"
-        const val FIRST_ITEM_FROM_DEPARTURES = "//*[@class=\"chosen-results\"]/li[1]"
         const val CALENDAR_INPUT = "//*[@id = \"dates\"]"
         const val SEARCH_BUTTON = "//*[contains(@class, \"btn-search\")]"
         const val MASK = "//*[@id = \"select2-drop-mask\"]"
@@ -49,10 +46,6 @@ object XPath {
         const val NO_TOURS_FOUND_TITLE = "//*[contains(@data-bind,\"text: noToursFoundTitle()\")]"
         fun getListDropdownElement(value: String): String {
             return "//*[@class=\"select2-result-label\" and text() = \"${value}\"]"
-        }
-
-        fun getListArrivalDropdownElement(value: String): String {
-            return "//*[text() = \"${value}\"]/ancestor-or-self::li[contains(@class,\"active-result\")]"
         }
 
         fun getXPathForCalendarDays(date: LocalDate): String {

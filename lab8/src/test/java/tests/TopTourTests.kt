@@ -77,7 +77,6 @@ class TopTourTests : CommonConditions() {
 
     @Test
     fun testFindNotExistedTour() {
-        val source = "Минск"
         val destinationCountry = "ОАЭ"
         val destinationCity = "Ум Аль Кувейн"
         val date = LocalDate.now()

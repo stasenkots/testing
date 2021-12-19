@@ -10,9 +10,6 @@ import java.time.LocalDate
 
 class TourSearchPage(driver: WebDriver) : AbstractPage(driver) {
 
-    @FindBy(xpath = XPath.TopTourSearchPage.CLOSE_DEPARTURE)
-    private lateinit var closeDepartureButton: WebElement
-
     @FindBy(xpath = XPath.TopTourSearchPage.CLOSE_ARRIVAL_COUNTRY)
     private lateinit var closeArrivalCountryButton: WebElement
 
@@ -37,16 +34,6 @@ class TourSearchPage(driver: WebDriver) : AbstractPage(driver) {
     fun openPage(): TourSearchPage {
         Logger.info("open tour search page")
         driver.getElement(XPath.TopTourSearchPage.FIELD_DEPARTURE)
-        return this
-    }
-
-    fun enterDeparture(departure: String): TourSearchPage {
-        Logger.info(" Enter departure - $departure")
-        closeDepartureButton.click()
-        departureField.sendKeys(departure)
-        val firstDropDownElement =
-            driver.getElement(XPath.TopTourSearchPage.getListArrivalDropdownElement(departure))
-        firstDropDownElement.click()
         return this
     }
 
